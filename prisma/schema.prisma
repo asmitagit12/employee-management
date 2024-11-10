@@ -1,0 +1,143 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  firstName     String? // Optional first name
+  lastName      String? // Optional last name
+  name          String?
+  username      String?       @unique
+  mobile        String? // Optional mobile number as String (since MongoDB doesn't have a number type)
+  email         String        @unique // Unique email
+  designation   String? // Optional designation
+  empNo         String? // Employee number, stored as String
+  role          Role          @default(USER) // Enum type for role
+  password      String? // Optional password
+  tokenOtp      Int?          @default(0) // OTP stored as integer
+  profileStatus ProfileStatus @default(INACTIVE) // Enum for profile status
+  userDeleted   Boolean       @default(false) // User deleted flag
+  createdAt     DateTime      @default(now()) // Automatically set timestamp
+  updatedAt     DateTime      @updatedAt // Automatically updated timestamp
+
+  createdTasks  Task[] @relation("TaskCreatedBy")
+  assignedTasks Task[] @relation("TaskAssignedTo")
+
+  comments    Comment[]
+  attendances Attendance[] @relation("UserAttendance")
+
+  Leave Leave[]
+}
+
+model Task {
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+  title        String?
+  description  String?
+  taskno       String?
+  status       TaskStatus   @default(pending) // Enum for status
+  assignedToId String?      @db.ObjectId // Single reference to the assigned user
+  assignedTo   User?        @relation("TaskAssignedTo", fields: [assignedToId], references: [id]) // Unique relation name for assignedTo
+  createdById  String       @db.ObjectId // Reference to the creator user
+  createdBy    User         @relation("TaskCreatedBy", fields: [createdById], references: [id]) // Unique relation name for createdBy
+  createdAt    DateTime     @default(now()) // Automatically set creation date
+  duedate      DateTime?
+  completed    DateTime?
+  projectname  String       @default("") // Default project name
+  priority     TaskPriority @default(medium) // Enum for priority
+  delayedby    Int          @default(0) // Number of days delayed
+  taskdeleted  Boolean      @default(false) // Soft delete
+  updatedAt    DateTime     @updatedAt // Automatically update timestamp
+
+  comments Comment[]
+}
+
+// Define enums for status and priority
+enum TaskStatus {
+  pending
+  in_process
+  completed
+  delayed
+}
+
+enum TaskPriority {
+  low
+  medium
+  high
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum ProfileStatus {
+  INACTIVE
+  ACTIVE
+  TERMINATED
+}
+
+model Comment {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdBy   User     @relation(fields: [createdById], references: [id])
+  createdById String   @db.ObjectId
+  task        Task     @relation(fields: [taskId], references: [id])
+  taskId      String   @db.ObjectId
+  comment     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Attendance {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String     @db.ObjectId // Required userId
+  date        String
+  present     Boolean    @default(false)
+  leaveType   LeaveType?
+  leaveReason String?
+  timeIn      String?
+  timeOut     String?
+  totalHours  String?
+
+  user User? @relation("UserAttendance", fields: [userId], references: [id]) // Optional User relation
+
+  @@unique([userId, date]) // Composite unique constraint for userId and date
+  @@map("attendance")
+}
+
+
+model Leave {
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String      @db.ObjectId
+  user        User        @relation(fields: [userId], references: [id]) // Foreign key to User model
+  leaveType   LeaveType?  // Enum for type of leave (optional field)
+  leaveReason String?     // Reason for leave
+  startDate   DateTime?   // Start date of leave (optional)
+  endDate     DateTime?   // End date of leave (optional)
+  status      LeaveStatus @default(PENDING) // Enum for leave status with default "pending"
+  createdAt   DateTime    @default(now())   // Automatically set creation timestamp
+  updatedAt   DateTime    @updatedAt        // Automatically set updated timestamp
+
+  @@map("leave") // Maps this model to a MongoDB collection named "leave"
+}
+
+// Enum for leave type
+enum LeaveType {
+  SICK_LEAVE
+  CASUAL_LEAVE
+  EMERGENCY_LEAVE
+  HOLIDAY
+  HALF_DAY
+}
+
+// Enum for leave status
+enum LeaveStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
