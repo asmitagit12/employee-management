@@ -149,7 +149,7 @@ const AttendanceList = () => {
               <TableHead>Total Hourse</TableHead>
               <TableHead>Leave Type</TableHead>
               <TableHead>Leave Reason</TableHead>
-              <TableHead>Updated At</TableHead>
+              {/* <TableHead>Updated At</TableHead> */}
               {/* <TableHead className='text-center'>Actions</TableHead> */}
             </TableRow>
           </TableHeader>
@@ -167,10 +167,10 @@ const AttendanceList = () => {
                   <TableCell>{attendance.totalHours || '-'}</TableCell>
                   <TableCell>{attendance.leaveType || '-'}</TableCell>
                   <TableCell>{attendance.leaveReason || '-'}</TableCell>
-                  <TableCell>
+                  {/* <TableCell>
                     {' '}
                     {new Date(attendance.updatedAt).toLocaleDateString('en-GB')}
-                  </TableCell>
+                  </TableCell> */}
                 </TableRow>
               ))
             ) : (

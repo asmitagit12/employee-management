@@ -248,15 +248,14 @@ export default function LeftSidebar ({ children }: ChildProps) {
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarFooter> */}
-        {/* <SidebarFooter>
+        <SidebarFooter>
           <FooterMenuOptions />
-        </SidebarFooter> */}
+        </SidebarFooter>
       </Sidebar>
 
       <SidebarInset>
         <Header />
-        <Separator />
-        <SecondHeader />
+
         <Separator />
         <div className='flex flex-1 flex-col gap-4 p-4'>{children}</div>
       </SidebarInset>
@@ -275,7 +274,7 @@ function HeaderMenuOptions () {
           className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
         >
           {/* <div className='flex aspect-square size-8 items-center justify-center rounded-full bg-sidebar-primary text-sidebar-primary-foreground'> */}
-            <Image src={logo} alt='logo' height={38} width={38} />
+          <Image src={logo} alt='logo' height={38} width={38} />
           {/* </div> */}
           <div className='grid flex-1 text-left text-sm leading-tight'>
             <span className='truncate font-semibold'>TEAMEDGE</span>
@@ -291,7 +290,7 @@ function FooterMenuOptions () {
   const { data: session } = useSession()
   const user = session?.user
   const logout = () => signOut({ redirect: true, callbackUrl: '/signin' })
-  console.log("User role: ", user?.role);
+
   const options = [
     {
       label: 'Profile',
@@ -322,18 +321,21 @@ function FooterMenuOptions () {
               >
                 <Avatar className='h-8 w-8 rounded-full border border-blue-500'>
                   <AvatarImage src={user?.image} alt={user?.name} />
-                  <AvatarFallback className='rounded-full'>AP</AvatarFallback>
+                  <AvatarFallback className='rounded-full'>
+                    {user?.email?.charAt(0).toUpperCase()}
+                    {/* {user?.lastName?.charAt(0).toUpperCase()} */}
+                  </AvatarFallback>
                 </Avatar>
 
                 <div className='grid flex-1 text-left text-sm leading-tight'>
                   <span className='truncate font-semibold'>{user?.name}</span>
                   <span className='truncate text-xs'>{user?.email}</span>
                 </div>
-                <ChevronsUpDown className='ml-auto size-4' />
+                {/* <ChevronsUpDown className='ml-auto size-4' /> */}
               </SidebarMenuButton>
             </DropdownMenuTrigger>
 
-            <DropdownMenuContent
+            {/* <DropdownMenuContent
               className='w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg [&_svg]:size-4 [&_svg]:stroke-[1.5] [&_svg]:mr-2'
               side='bottom'
               align='end'
@@ -373,7 +375,7 @@ function FooterMenuOptions () {
               >
                 <LogOut /> Log out
               </DropdownMenuItem>
-            </DropdownMenuContent>
+            </DropdownMenuContent> */}
           </DropdownMenu>
         </SidebarMenuItem>
       </SidebarMenu>

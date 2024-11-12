@@ -96,7 +96,7 @@ export default function SignUpPage () {
           onSubmit={form.handleSubmit(onSubmit)}
           className='flex items-start justify-start'
         >
-          <div className='mx-auto grid w-[350px] gap-6'>
+          <div className='mx-auto grid w-full gap-6'>
             <div className='grid gap-2 text-left'>
               <h1 className='text-2xl font-semibold tracking-tight'>Sign Up</h1>
               <p className='text-sm text-muted-foreground'>
@@ -104,7 +104,7 @@ export default function SignUpPage () {
               </p>
             </div>
 
-            <div className='grid gap-4'>
+            <div className='grid gap-4 col-span-8'>
               <div className='grid gap-2'>
                 <InputController
                   name='username'
@@ -129,7 +129,7 @@ export default function SignUpPage () {
                   type='password'
                 />
 
-                <Button type='submit' className='w-full' disabled={loading}>
+                <Button type='submit'className='w-full h-10 text-lg bg-[#007AFF] hover:bg-[#005BB5]' disabled={loading}>
                   {renderButtonContent()}
                 </Button>
                 <Button

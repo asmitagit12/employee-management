@@ -55,6 +55,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import logo from '../../../public/logo-t.svg'
+import logoBox from '../../../public/vector.svg'
 import React from 'react'
 
 export const metadata: Metadata = {
@@ -70,7 +71,7 @@ export default function AuthLayout({ children }: ChildProps) {
     <React.Fragment>
 
       <div className='flex flex-col items-center justify-center h-screen bg-slate-100 dark:bg-sidebar-accent'>
-        <div className='w-full lg:w-[50%] md:w-[60%] flex justify-center items-center'>
+        <div className='w-full lg:w-[60%] md:w-[60%] flex justify-center items-center'>
           <div className='w-full lg:flex rounded-xl bg-card text-card-foreground md:border md:shadow-2xl p-3'>
             <div className='w-full lg:w-3/4  flex flex-col justify-start border-r'>
               <div className='flex justify-start py-2'>
@@ -94,9 +95,9 @@ export default function AuthLayout({ children }: ChildProps) {
                     </div>
                     TeamEdge */}
                     <Image
-                      src={logo}
+                      src={logoBox}
                       alt='logo'
-                      style={{ width: '190px', height: 'auto' }}
+                      style={{ width: '40px', height: '40px' }}
                     />
                   </div>
 

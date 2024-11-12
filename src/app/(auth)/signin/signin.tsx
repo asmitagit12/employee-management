@@ -134,7 +134,7 @@ export default function SignInPage () {
                     type='password'
                   />
                 </div>
-                <Button type='submit' className='w-full h-10 text-lg' disabled={loading}>
+                <Button type='submit' className='w-full h-10 text-lg bg-[#007AFF] hover:bg-[#005BB5]' disabled={loading}>
                   {renderButtonContent()}
                 </Button>
                
@@ -166,6 +166,7 @@ export default function SignInPage () {
               <div className='text-left text-sm'>
                 Don&apos;t have an account?&nbsp;
                 <Link href='/signup' className='underline'>
+                
                   Sign up
                 </Link>
               </div>

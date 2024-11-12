@@ -38,9 +38,9 @@ const LeaveList = () => {
     console.log('Edit leave with ID:', id)
   }
 
-  const handleView = (id: string) => {
-    console.log('View leave with ID:', id)
-  }
+  // const handleView = (id: string) => {
+  //   console.log('View leave with ID:', id)
+  // }
 
   const handleDelete = (data: any) => {
     console.log('Delete leave with ID:', data)
@@ -92,13 +92,13 @@ const LeaveList = () => {
                 <TableCell>{leave.leaveReason || '-'}</TableCell>
                 <TableCell className='flex items-center justify-center'>
                   <div className='flex space-x-2'>
-                    <Button
+                    {/* <Button
                       variant='ghost'
                       className='p-2'
                       onClick={() => handleView(leave.id)}
                     >
                       <Eye />
-                    </Button>
+                    </Button> */}
                     <Button
                       variant='ghost'
                       className='p-2'
